@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class WGraph_DSTest {
@@ -11,12 +14,6 @@ class WGraph_DSTest {
 
 
 
-
-    @BeforeAll
-    public static void graphInit()
-    {
-
-    }
     @Test
     void getNode() {
         weighted_graph graph = new WGraph_DS();
@@ -86,49 +83,15 @@ class WGraph_DSTest {
         graph.addNode(-1);
         graph.addNode(-5);
         assertTrue(graph.nodeSize() == 4);
-        try {
-            graph.addNode(0);
-            fail("your node already exist in the graph");
-        }
-        catch (Exception e) {
-            assertTrue(true);
-        }
-        try {
-            graph.addNode(1);
-            fail("your node already exist in the graph");
-        }
-        catch (Exception e) {
-            assertTrue(true);
-        }
-        try {
-            graph.addNode(-1);
-            fail("your node already exist in the graph");
-        }
-        catch (Exception e) {
-            assertTrue(true);
-        }
-        try {
-            graph.addNode(-1);
-            fail("your node already exist in the graph");
-        }
-        catch (Exception e) {
-            assertTrue(true);
-        }
-        try {
-            graph.addNode(-5);
-            fail("your node already exist in the graph");
-        }
-        catch (Exception e) {
-            assertTrue(true);
-        }
+
+        graph.addNode(0);
         assertTrue(graph.nodeSize() == 4);
-        try {
-            graph.addNode(10);
-            assertTrue(true);
-        }
-        catch (Exception e) {
-            assertTrue(false);
-        }
+        graph.addNode(1);
+        graph.addNode(-1);
+        graph.addNode(-1);
+        graph.addNode(-5);
+        assertTrue(graph.nodeSize() == 4);
+        graph.addNode(10);
         assertTrue(graph.nodeSize() == 5);
     }
 
@@ -161,34 +124,175 @@ class WGraph_DSTest {
 
     @Test
     void getV() {
+        weighted_graph graph = new WGraph_DS();
+        graph.addNode(0);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(5);
+        graph.addNode(10);
+        int[] arr = new int[5];
+        int[] ansArr = {0,1,2,5,10};
+        int i = 0;
+        for(node_info n : graph.getV())
+        {
+            arr[i] = n.getKey();
+            ++i;
+        }
+
+        assertArrayEquals(ansArr,arr);
+
+
     }
 
     @Test
     void testGetV() {
+        weighted_graph graph = new WGraph_DS();
+        graph.addNode(10);
+        graph.addNode(11);
+        graph.addNode(12);
+        graph.addNode(13);
+        graph.addNode(14);
+        graph.addNode(15);
+        graph.connect(10,11,2);
+        graph.connect(10,12,3);
+        graph.connect(10,13,4);
+        graph.connect(10,15,2);
+        graph.connect(11,12,2);
+        int[] ansArr = {11,12,13,15};
+        int[] arr = new int[4];
+        int i = 0;
+        for(node_info n : graph.getV(10))
+        {
+            arr[i] = n.getKey();
+            ++i;
+        }
+        assertArrayEquals(ansArr,arr);
     }
 
     @Test
     void removeNode() {
+        weighted_graph graph = new WGraph_DS();
+        assertTrue(graph.nodeSize() == 0);
+        graph.addNode(0);
+        assertTrue(graph.nodeSize() == 1);
+        graph.removeNode(1);
+        assertTrue(graph.nodeSize() == 1);
+        graph.removeNode(0);
+        assertTrue(graph.nodeSize() == 0);
+        graph.addNode(0);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.connect(0,1,2);
+        graph.connect(0,2,3);
+        graph.connect(0,3,4);
+        graph.connect(0,4,2);
+        graph.connect(0,5,2);
+        graph.connect(1,2,2);
+        graph.removeNode(0);
+        assertFalse(graph.hasEdge(0,1));
+        assertFalse(graph.hasEdge(0,2));
+        assertFalse(graph.hasEdge(0,3));
+        assertFalse(graph.hasEdge(0,4));
+        assertFalse(graph.hasEdge(0,5));
+        assertTrue(graph.hasEdge(1,2));
+        assertTrue(graph.getEdge(0,1) == -1);
+
 
     }
 
     @Test
     void removeEdge() {
+        weighted_graph graph = new WGraph_DS();
+        graph.addNode(0);
+        graph.addNode(1);
+        assertTrue(graph.edgeSize() == 0);
+        assertFalse(graph.hasEdge(0,1));
+        graph.connect(0,1,2);
+        assertTrue(graph.hasEdge(0,1));
+        assertTrue(graph.edgeSize() == 1);
+        graph.removeEdge(1,0);
+        assertTrue(graph.edgeSize() == 0);
+        assertFalse(graph.hasEdge(0,1));
+
+
+
     }
 
     @Test
     void nodeSize() {
-        weighted_graph graph = new WGraph_DS();
-        assertTrue(graph.nodeSize() == 0);
-        graph.addNode(Integer.MAX_VALUE);
-        assertTrue(graph.nodeSize() == 1);
+
+
+
     }
 
     @Test
     void edgeSize() {
+        weighted_graph graph = new WGraph_DS();
+        graph.addNode(0);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        assertTrue(graph.edgeSize() == 0);
+        graph.connect(0,1,2);
+        graph.connect(0,2,3);
+        graph.connect(0,3,4);
+        graph.connect(0,4,2);
+        graph.connect(0,5,2);
+        graph.connect(1,2,2);
+        graph.connect(1,2,2);
+        graph.connect(0,3,4);
+
+        assertTrue(graph.edgeSize() == 6);
+        graph.removeNode(0);
+        assertTrue(graph.edgeSize() == 1);
+        graph.removeNode(1);
+        assertTrue(graph.edgeSize() == 0);
     }
 
     @Test
     void getMC() {
+        weighted_graph graph = new WGraph_DS();
+        assertTrue(graph.getMC() == 0);
+        graph.addNode(0);
+        assertTrue(graph.getMC() == 1);
+        graph.addNode(1);
+        assertTrue(graph.getMC() == 2);
+        graph.addNode(2);
+        assertTrue(graph.getMC() == 3);
+        graph.addNode(3);
+        assertTrue(graph.getMC() == 4);
+        graph.addNode(4);
+        assertTrue(graph.getMC() == 5);
+        graph.addNode(5);
+        assertTrue(graph.getMC() == 6);
+        graph.connect(0,1,2);
+        assertTrue(graph.getMC() == 7);
+        graph.connect(0,2,3);
+        assertTrue(graph.getMC() == 8);
+        graph.connect(0,3,4);
+        assertTrue(graph.getMC() == 9);
+        graph.connect(0,4,2);
+        assertTrue(graph.getMC() == 10);
+        graph.connect(0,5,2);
+        assertTrue(graph.getMC() == 11);
+        graph.connect(1,2,2);
+        assertTrue(graph.getMC() == 12);
+        graph.connect(1,2,2);
+        assertTrue(graph.getMC() == 12);
+        graph.connect(1,2,4);
+        assertTrue(graph.getMC() == 13);
+        graph.connect(0,3,4);
+        assertTrue(graph.getMC() == 13);
+
+        assertTrue(graph.edgeSize() == 6);
+        graph.removeNode(0);
+        assertTrue(graph.edgeSize() == 1);
+        graph.removeNode(1);
+        assertTrue(graph.edgeSize() == 0);
     }
 }

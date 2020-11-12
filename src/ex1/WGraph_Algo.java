@@ -131,6 +131,24 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         return true;
     }
 
+    /**
+     * init PriorityQueue of node_info
+     * init HashMap of key: Integer , value: node_info
+     * We go through all the vertices
+     * - set their tag to Max_Value
+     * - set their info to WHITE
+     * - put in our HashMap - key: key of the node , value: null
+     * - add to our PriorityQueue the node
+     * set tag of our start node to be 0
+     * while our PriorityQueue is not empty
+     * -remove our node that we're working on him
+     * -We pass all his neighbors
+     * -if he is WHITE We never went through it
+     *
+     *
+     * @param node
+     * @return HashMap<Integer, node_info> that contains the
+     */
     private HashMap<Integer, node_info> dijkstra(node_info node)
     {
         PriorityQueue<node_info> queue = new PriorityQueue<>();

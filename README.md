@@ -20,9 +20,11 @@ class WGraphDS: builds the graph by EdgeInfo,NodeInfo
 <br>
 class WGraph_Algo: this class does all the complex calculations in the graph
 <br>
-Example of a weighted and undirected graph:
+Examples of a weighted and undirected graph:
 
-<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph1.png"  width="250"> <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph2.png"  width="250">
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph1.png"  width="250"> 
+
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph2.png"  width="250">
 
 <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph3.png"  width="250">
 
@@ -30,6 +32,7 @@ Example of a weighted and undirected graph:
 
 Algorithm dijkstra explanation:
 
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra1.png"  width="250">  <img        src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra2.png"  width="250"> 
 
 White color - not visited nodes<br>
 Black color - visited nodes<br>

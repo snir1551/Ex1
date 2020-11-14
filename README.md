@@ -12,9 +12,9 @@ for each of the classes we have interface:
 - for WGraphDS class we have weighted_graph interface
 - for WGraph_Algo class we have weighted_graph_algorithms interface
 <br>
-class EdgeData: he is edge class  
+class EdgeData: he is edge class
 <br>
-class NodeInfo: he is internal class of WGraphDS 
+class NodeInfo: he is node class
 <br>
 class WGraphDS: builds the graph by EdgeInfo,NodeInfo
 <br>

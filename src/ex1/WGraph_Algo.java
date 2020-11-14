@@ -7,84 +7,126 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     //
     private weighted_graph graph;
 
+    /**
+     * default constructor
+     */
     public WGraph_Algo()
     {
         graph = null;
     }
 
+    /**
+     * Contstructor that get weighted_graph
+     * init the graph
+     * @param g - weighted_graph
+     */
     public WGraph_Algo(weighted_graph g)
     {
-        init(g);
+        init(g); //init the graph
     }
 
-
+    /**
+     * Init the graph on which this set of algorithms operates on.
+     * @param g
+     */
     @Override
     public void init(weighted_graph g) {
         graph = g;
     }
 
+    /**
+     * Return the underlying graph of which this class works.
+     * @return
+     */
     @Override
     public weighted_graph getGraph() {
         return graph;
-    }
+    } //getter of graph
 
+    /**
+     * Compute a deep copy of this weighted graph.
+     * @return
+     */
     @Override
     public weighted_graph copy() {
-        WGraph_DS copyGraph = new WGraph_DS(graph);
-        return copyGraph;
+        WGraph_DS copyGraph = new WGraph_DS(graph); //use the copy constructor of WGraph_DS
+        return copyGraph; // return the copy(deep copy) of the graph
     }
-
+    /**
+     * Returns true if and only if (iff) there is a valid path from EVREY node to each
+     * other node. NOTE: assume ubdirectional graph.
+     * @return
+     */
     @Override
     public boolean isConnected() {
-        if(graph.nodeSize() == 0)
+        if(graph.nodeSize() == 0) //if the size nodes in the graph equal to 0 so we need to return true
             return true;
-        dijkstra(graph.getV().iterator().next());
-        for(node_info ni : graph.getV())
+        dijkstra(graph.getV().iterator().next());//start dijkstra algorithem on the first node
+        for(node_info ni : graph.getV()) // go through all of the vertexes
         {
-            if(ni.getInfo().equals("WHITE"))
+            if(ni.getTag() >= Double.MAX_VALUE) // if one of the node is MAX_VALUE so we need to return false
                 return false;
         }
-        return true;
+        return true; //if all of the nodes are BLACK COLOR return true
     }
-
+    /**
+     * returns the length of the shortest path between src to dest
+     * Note: if no such path --> returns -1
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return
+     */
     @Override
     public double shortestPathDist(int src, int dest) {
-        if(graph.getNode(src) == null || graph.getNode(dest) == null)
+        if(graph.getNode(src) == null || graph.getNode(dest) == null) //if one of the nodes not exist return -1
             return -1;
-        dijkstra(graph.getNode(src));
-        return graph.getNode(dest).getTag();
+        dijkstra(graph.getNode(src)); //start dijkstra algorithm on the (src node)
+        return graph.getNode(dest).getTag(); // return the shortest path between them by the tag that contain the distance
     }
-
+    /**
+     * returns the the shortest path between src to dest - as an ordered List of nodes:
+     * src--> n1-->n2-->...dest
+     * see: https://en.wikipedia.org/wiki/Shortest_path_problem
+     * Note if no such path --> returns null;
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return
+     */
     @Override
     public List<node_info> shortestPath(int src, int dest) {
-        LinkedList<node_info> list = new LinkedList<>();
-        if(graph.getNode(src) == null || graph.getNode(dest) == null)
+        LinkedList<node_info> list = new LinkedList<>(); //list of the path from src to dest
+        if(graph.getNode(src) == null || graph.getNode(dest) == null) // if src or dest not exist return null
         {
             return null;
         }
-        if(src == dest)
+        if(src == dest) //if src equal to dest
         {
-            list.add(graph.getNode(src));
-            return list;
+            list.add(graph.getNode(src)); //add src to list
+            return list; //return list
         }
-        HashMap<Integer,node_info> pv = dijkstra(this.graph.getNode(src));
-        if(graph.getNode(dest).getInfo().equals("WHITE"))
+        HashMap<Integer,node_info> pv = dijkstra(this.graph.getNode(src));//start dijkstra on src and return hashmap that contain the path fathers
+        if(graph.getNode(dest).getInfo().equals("WHITE")) //if the dest is WHITE so we didnt move on him so return null
         {
             return null;
         }
 
-        list.addFirst(graph.getNode(dest));
-        node_info t = pv.get(dest);
+        list.addFirst(graph.getNode(dest)); //add to list dest
+        node_info t = pv.get(dest); // t = next node
 
         while(t != null)
         {
-            list.addFirst(graph.getNode(t.getKey()));
-            t = pv.get(t.getKey());
+            list.addFirst(graph.getNode(t.getKey())); // add the t to list
+            t = pv.get(t.getKey()); // t = next node
         }
 
         return list;
     }
-
+    /**
+     * Saves this weighted (undirected) graph to the given
+     * file name
+     * @param file - the file name (may include a relative path).
+     * @return true - iff the file was successfully saved
+     */
     @Override
     public boolean save(String file) {
         FileOutputStream fis = null;
@@ -107,6 +149,14 @@ public class WGraph_Algo implements weighted_graph_algorithms {
 
     }
 
+    /**
+     * This method load a graph to this graph algorithm.
+     * if the file was successfully loaded - the underlying graph
+     * of this class will be changed (to the loaded one), in case the
+     * graph was not loaded the original graph should remain "as is".
+     * @param file - file name
+     * @return true - iff the graph was successfully loaded.
+     */
     @Override
     public boolean load(String file) {
         FileInputStream fis = null;
@@ -132,6 +182,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     }
 
     /**
+     *
+     *
      * init PriorityQueue of node_info
      * init HashMap of key: Integer , value: node_info
      * We go through all the vertices
@@ -142,12 +194,16 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      * set tag of our start node to be 0
      * while our PriorityQueue is not empty
      * -remove our node that we're working on him
-     * -We pass all his neighbors
-     * -if he is WHITE We never went through it
+     *  -We pass all his neighbors
+     *  -if he is WHITE We never went through it
+     *  -if the tag of the neighbor bigger than new path tag so update the neighbor tag
+     *  -update the father path
+     *  -decreaseKey - we're removing the node and add him back
+     * -after we finished work on specific node paint him "black"
      *
      *
      * @param node
-     * @return HashMap<Integer, node_info> that contains the
+     * @return HashMap<Integer, node_info> that contains the father path
      */
     private HashMap<Integer, node_info> dijkstra(node_info node)
     {
@@ -184,5 +240,18 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         }
         return mapPath;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WGraph_Algo that = (WGraph_Algo) o;
+        return Objects.equals(graph, that.graph);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(graph);
     }
 }

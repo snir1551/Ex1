@@ -37,4 +37,4 @@ Algorithm dijkstra explanation:
 White color - not visited nodes<br>
 Black color - visited nodes<br>
 
-for more information: 
+for more information: https://github.com/snir1551/Ex1_OOP/wiki

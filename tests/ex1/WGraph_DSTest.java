@@ -73,6 +73,7 @@ class WGraph_DSTest {
         assertTrue(graph.getEdge(0,3) == -1); // not exist edge between them so we dont have weight return -1
     }
 
+
     @Test
     void addNode() {
         weighted_graph graph = new WGraph_DS();
@@ -223,7 +224,14 @@ class WGraph_DSTest {
 
     @Test
     void nodeSize() {
-
+        weighted_graph graph = new WGraph_DS();
+        assertTrue(graph.nodeSize() == 0);
+        graph.addNode(0);
+        assertTrue(graph.nodeSize() == 1);
+        graph.addNode(1);
+        assertTrue(graph.nodeSize() == 2);
+        graph.removeNode(0);
+        assertTrue(graph.nodeSize() == 1);
 
 
     }

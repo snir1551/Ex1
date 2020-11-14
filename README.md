@@ -12,9 +12,9 @@ for each of the classes we have interface:
 - for WGraphDS class we have weighted_graph interface
 - for WGraph_Algo class we have weighted_graph_algorithms interface
 <br>
-class EdgeData: he is edge class  
+class EdgeData: he is edge class
 <br>
-class NodeInfo: he is internal class of WGraphDS 
+class NodeInfo: he is node class
 <br>
 class WGraphDS: builds the graph by EdgeInfo,NodeInfo
 <br>
@@ -22,7 +22,9 @@ class WGraph_Algo: this class does all the complex calculations in the graph
 <br>
 Example of a weighted and undirected graph:
 
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph1.png"  width="250"> <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph2.png"  width="250">
 
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph3.png"  width="250">
 
 
 

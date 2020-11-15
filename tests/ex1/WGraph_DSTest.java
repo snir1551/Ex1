@@ -1,11 +1,9 @@
 package ex1;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -302,5 +300,36 @@ class WGraph_DSTest {
         assertTrue(graph.edgeSize() == 1);
         graph.removeNode(1);
         assertTrue(graph.edgeSize() == 0);
+    }
+
+    @Test
+    void TestRunTime()
+    {
+        long start = new Date().getTime();
+        int numNode = 1000000;
+        int numEdge = numNode*10;
+        weighted_graph graph = new WGraph_DS();
+        for(int i = 0; i<numNode ; i++)
+        {
+            graph.addNode(i);
+        }
+        assertTrue(graph.nodeSize() == 1000000);
+        int i = 0;
+        while(numEdge > graph.edgeSize())
+        {
+            for(node_info n : graph.getV())
+            {
+                if(i > numNode)
+                    i=0;
+                if(numEdge <= graph.edgeSize())
+                    break;
+                graph.connect(n.getKey(),i,10);
+            }
+            i++;
+        }
+        long end = new Date().getTime();
+        double dt = (end-start)/1000.0;
+        assertTrue(dt < 10.0);//4.3 sec
+
     }
 }

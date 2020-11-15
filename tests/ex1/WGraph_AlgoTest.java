@@ -156,34 +156,70 @@ class WGraph_AlgoTest {
 
     @Test
     void shortestPathDist() {
-        weighted_graph graph = buildThirdGraph();
+        weighted_graph graph = buildFirstGraph();
         weighted_graph_algorithms graph_algo = new WGraph_Algo(graph);
-        assertTrue(graph_algo.shortestPathDist(1,5) == 20);
+        assertTrue(graph_algo.shortestPathDist(1,5) == 7);
         assertTrue(graph_algo.shortestPathDist(1,1) == 0);
-        assertTrue(graph_algo.shortestPathDist(2000,5) == -1);
-        assertTrue(graph_algo.shortestPathDist(5,2000) == -1);
+        assertTrue(graph_algo.shortestPathDist(5,5) == 0);
+
+        graph = buildSecondGraph();
+        graph_algo.init(graph);
+        assertTrue(graph_algo.shortestPathDist(1,2) == -1);
+        assertTrue(graph_algo.shortestPathDist(1,7) == 14);
+        assertTrue(graph_algo.shortestPathDist(1,5) == 6);
+        assertTrue(graph_algo.shortestPathDist(1,10) == 5);
+        assertTrue(graph_algo.shortestPathDist(1,11) == 20);
+
+        weighted_graph graph1 = buildThirdGraph();
+        weighted_graph_algorithms graph_algo1 = new WGraph_Algo(graph1);
+        assertTrue(graph_algo1.shortestPathDist(1,5) == 20);
+        assertTrue(graph_algo1.shortestPathDist(1,1) == 0);
+        assertTrue(graph_algo1.shortestPathDist(2000,5) == -1);
+        assertTrue(graph_algo1.shortestPathDist(5,2000) == -1);
+        assertTrue(graph_algo1.shortestPathDist(1,4) == 20);
+        assertTrue(graph_algo1.shortestPathDist(5,1) == 20);
+        assertTrue(graph_algo1.shortestPathDist(5,3) == 11);
 
     }
 
     @Test
     void shortestPath() {
-        weighted_graph graph = buildThirdGraph();
-        weighted_graph_algorithms graph_algo = new WGraph_Algo(graph);
-        List<node_info> path = graph_algo.shortestPath(1,5);
-        int[] arr = new int[4];
-        int[] ansArr = {1,3,6,5};
+        weighted_graph graph1 = buildThirdGraph();
+        weighted_graph_algorithms graph_algo1 = new WGraph_Algo(graph1);
+        List<node_info> path1 = graph_algo1.shortestPath(1,5);
+        int[] arr1 = new int[4];
+        int[] ansArr1 = {1,3,6,5};
         int i = 0;
-        for(node_info n : path)
+        for(node_info n : path1)
         {
-            arr[i] = n.getKey();
+            arr1[i] = n.getKey();
             ++i;
         }
-        assertArrayEquals(ansArr,arr);
+        assertArrayEquals(ansArr1,arr1);
+
+        List<node_info> path2 = graph_algo1.shortestPath(5,1);
+        int[] arr2 = new int[4];
+        int[] ansArr2 = {5,6,3,1};
+        i = 0;
+        for(node_info n : path1)
+        {
+            arr1[i] = n.getKey();
+            ++i;
+        }
+        assertArrayEquals(ansArr1,arr1);
+
+        List<node_info> path3 = graph_algo1.shortestPath(5,0);
+        assertNull(path3);
+
+        List<node_info> path4 = graph_algo1.shortestPath(0,5);
+        assertNull(path4);
+
+
     }
 
 
     @Test
-    void saveANDload()
+    void saveANDload()//we need check two them together because we can not assume that the test of saving will appear before the test of load
     {
         weighted_graph graph = buildThirdGraph();
         weighted_graph_algorithms graph_algo = new WGraph_Algo(graph);
@@ -193,5 +229,23 @@ class WGraph_AlgoTest {
         graph_algo1.load("test1");
 
         assertEquals(graph_algo,graph_algo1);
+
+        weighted_graph graph2 = buildSecondGraph();
+        weighted_graph_algorithms graph_algo2 = new WGraph_Algo(graph);
+        graph_algo.save("test2");
+        weighted_graph graph3 = new WGraph_DS();
+        weighted_graph_algorithms graph_algo3 = new WGraph_Algo(graph);
+        graph_algo1.load("test2");
+
+        assertEquals(graph_algo2,graph_algo3);
+
+        weighted_graph graph4 = buildFirstGraph();
+        weighted_graph_algorithms graph_algo4 = new WGraph_Algo(graph);
+        graph_algo.save("test3");
+        weighted_graph graph5 = new WGraph_DS();
+        weighted_graph_algorithms graph_algo5 = new WGraph_Algo(graph);
+        graph_algo1.load("test3");
+
+        assertEquals(graph_algo4,graph_algo5);
     }
 }

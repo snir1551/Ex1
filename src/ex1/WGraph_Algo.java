@@ -185,9 +185,14 @@ public class WGraph_Algo implements weighted_graph_algorithms {
 
     /**
      *
+     * Algorithm dijksta:
+     * It goes over each vertex in the graph start with start node
+     * and changes the tag's neighbors to the tag to be the shortest distance
+     * and after finishing working on the vertex it paints it black and goes over all the vertices like this
      *
-     *
-     * @param node
+     * White color - not visited nodes
+     * Black color - visited nodes
+     * @param node start node in the graph that we operate on him dijkstra
      * @return HashMap<Integer, node_info> that contains the father path
      */
     private HashMap<Integer, node_info> dijkstra(node_info node)

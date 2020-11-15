@@ -45,7 +45,7 @@ public class WGraph_Algo implements weighted_graph_algorithms {
 
     /**
      * Compute a deep copy of this weighted graph.
-     * @return
+     * @return weighted_graph - deep copy of the graph
      */
     @Override
     public weighted_graph copy() {

@@ -81,6 +81,8 @@ public class WGraph_Algo implements weighted_graph_algorithms {
         if(graph.getNode(src) == null || graph.getNode(dest) == null) //if one of the nodes not exist return -1
             return -1;
         dijkstra(graph.getNode(src)); //start dijkstra algorithm on the (src node)
+        if(graph.getNode(dest).getTag() >= Double.MAX_VALUE)
+            return -1;
         return graph.getNode(dest).getTag(); // return the shortest path between them by the tag that contain the distance
     }
     /**
@@ -129,9 +131,9 @@ public class WGraph_Algo implements weighted_graph_algorithms {
      */
     @Override
     public boolean save(String file) {
-        FileOutputStream fis = null;
+        FileOutputStream fis = null; //open stream
         try {
-            fis = new FileOutputStream(file);
+            fis = new FileOutputStream(file); //let him the file name
             ObjectOutputStream ois = new ObjectOutputStream(fis);
             ois.writeObject(graph);
             ois.close();
@@ -184,61 +186,45 @@ public class WGraph_Algo implements weighted_graph_algorithms {
     /**
      *
      *
-     * init PriorityQueue of node_info
-     * init HashMap of key: Integer , value: node_info
-     * We go through all the vertices
-     * - set their tag to Max_Value
-     * - set their info to WHITE
-     * - put in our HashMap - key: key of the node , value: null
-     * - add to our PriorityQueue the node
-     * set tag of our start node to be 0
-     * while our PriorityQueue is not empty
-     * -remove our node that we're working on him
-     *  -We pass all his neighbors
-     *  -if he is WHITE We never went through it
-     *  -if the tag of the neighbor bigger than new path tag so update the neighbor tag
-     *  -update the father path
-     *  -decreaseKey - we're removing the node and add him back
-     * -after we finished work on specific node paint him "black"
-     *
      *
      * @param node
      * @return HashMap<Integer, node_info> that contains the father path
      */
     private HashMap<Integer, node_info> dijkstra(node_info node)
     {
-        PriorityQueue<node_info> queue = new PriorityQueue<>();
-        HashMap<Integer,node_info> mapPath = new HashMap<>();
-        for(node_info ni : graph.getV())
+        PriorityQueue<node_info> queue = new PriorityQueue<>(); // init PriorityQueue of node_info
+        HashMap<Integer,node_info> mapPath = new HashMap<>(); //init HashMap of key: Integer , value: node_info
+        for(node_info ni : graph.getV()) //We go through all the vertices
         {
-            ni.setTag(Double.MAX_VALUE);
-            ni.setInfo("WHITE");
-            mapPath.put(ni.getKey(),null);
-            queue.add(ni);
+            ni.setTag(Double.MAX_VALUE); //set their tag to Max_Value
+            ni.setInfo("WHITE"); //  set their info to WHITE
+            mapPath.put(ni.getKey(),null); //put in our HashMap (father path)  - key: key of the node , value: null
+            queue.add(ni); //add to our PriorityQueue the node
         }
-        node.setTag(0);
-
-        while(!queue.isEmpty())
+        node.setTag(0); //set tag of our start node to be 0
+        queue.remove(node);//decreaseKey - we're removing the node and add him back
+        queue.add(node);
+        while(!queue.isEmpty()) // while our PriorityQueue is not empty
         {
-            node_info n = queue.remove();
-            for(node_info ni : graph.getV(n.getKey()))
+            node_info n = queue.remove(); //remove our node that we're working on him
+            for(node_info ni : graph.getV(n.getKey())) //We go through all his neighbors
             {
-                if(ni.getInfo().equals("WHITE"))
+                if(ni.getInfo().equals("WHITE")) //if he is WHITE We never went through it
                 {
-                    if(n.getTag() < Double.MAX_VALUE) {
+                    if(n.getTag() < Double.MAX_VALUE) { //if tag smallest than MAX_VALUE
                         double t = n.getTag() + graph.getEdge(n.getKey(), ni.getKey());
-                        if (ni.getTag() > t) {
-                            ni.setTag(t);
-                            mapPath.put(ni.getKey(), n);
-                            queue.remove(ni);
+                        if (ni.getTag() > t) { //if the tag of the neighbor bigger than new path tag so update the neighbor tag
+                            ni.setTag(t); //neighbor tag to be t
+                            mapPath.put(ni.getKey(), n); //update the father path
+                            queue.remove(ni);//decreaseKey - we're removing the node and add him back
                             queue.add(ni);
                         }
                     }
                 }
             }
-            n.setInfo("BLACK");
+            n.setInfo("BLACK"); //we finish with the node set info to BLACK
         }
-        return mapPath;
+        return mapPath; //return the father path
 
     }
 

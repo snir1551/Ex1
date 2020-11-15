@@ -110,13 +110,16 @@ public class WGraph_DS implements weighted_graph, Serializable {
             {
                 return;
             }
-            else if(mapNodeInfo.containsKey(node2) && mapNodeInfo.containsKey(node1) && !hasEdge(node1,node2))// else if node1 and node2 exist in the graph and they dont have edge
+            else if(getNode(node2) != null && getNode(node1) != null)// else if node1 and node2 exist in the graph and they dont have edge
             {
-                ++edgeCounter; //count of edge +1
+                if(!hasEdge(node1,node2))
+                    ++edgeCounter; //count of edge +1
+
+                mapNeighbors.get(node1).put(node2, new EdgeInfo(w)); //add edge between node1 to node2 with weight (w)
+                mapNeighbors.get(node2).put(node1, new EdgeInfo(w)); //add edge between node2 to node1 with weight (w)
+                ++MC;
+
             }
-            mapNeighbors.get(node1).put(node2, new EdgeInfo(w)); //add edge between node1 to node2 with weight (w)
-            mapNeighbors.get(node2).put(node1, new EdgeInfo(w)); //add edge between node2 to node1 with weight (w)
-            ++MC;
 
 
         }
@@ -236,6 +239,27 @@ public class WGraph_DS implements weighted_graph, Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(mapNeighbors, mapNodeInfo, edgeCounter, MC);
+    }
+
+    public String toString()
+    {
+        String ans = "";
+        for(node_info node : getV())
+        {
+            ans += "[" + node.getKey() + "] -> [";
+            int num = nodeSize() - 1;
+            for(node_info n : getV(node.getKey())) {
+                ans += n.getKey() + " (" + getEdge(n.getKey(),node.getKey()) + ") ";
+                if(num > 0) {
+                    ans += ", ";
+                    --num;
+                }
+            }
+            ans += "] [tag: " + node.getTag() + "]\n";
+
+        }
+        return ans;
+
     }
 
     private static class NodeInfo implements node_info,Comparable<node_info>,Serializable

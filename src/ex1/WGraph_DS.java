@@ -30,6 +30,8 @@ public class WGraph_DS implements weighted_graph, Serializable {
         for(node_info ni : wgraph.getV()) //go through all the vertices of the wgraph
         {
             addNode(ni.getKey()); //add them to this graph
+            mapNodeInfo.get(ni.getKey()).setTag(ni.getTag());
+            mapNodeInfo.get(ni.getKey()).setInfo(ni.getInfo());
         }
         for(node_info ni : wgraph.getV()) // go through all the vertices of the wgraph
         {
@@ -119,7 +121,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
                 mapNeighbors.get(node2).put(node1, new EdgeInfo(w)); //add edge between node2 to node1 with weight (w)
                 ++MC;
 
-            }
+           }
 
 
         }

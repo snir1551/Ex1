@@ -22,17 +22,17 @@ class WGraph_Algo: this class does all the complex calculations in the graph
 <br>
 Examples of a weighted and undirected graph:
 
-<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph1.png"  width="250"> 
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/graph1.png"  width="250"> 
 
-<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph2.png"  width="250">
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/graph2.png"  width="250">
 
-<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/graph3.png"  width="250">
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/graph3.png"  width="250">
 
 
 
 Algorithm dijkstra explanation:
 
-<img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra1.png"  width="250">  <img        src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra2.png"  width="250"> <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra3.png"  width="250">  <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra4.png"  width="250">  <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra5.png"  width="250">  <img src="https://github.com/snir1551/Ex1_OOP/blob/master/pictures/dijkstra6.png"  width="250"> 
+<img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/dijkstra1.png"  width="250">  <img        src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/dijkstra2.png"  width="250"> <img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/dijkstra3.png"  width="250">  <img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/dijkstra4.png"  width="250">  <img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/dijkstra5.png"  width="250">  <img src="https://github.com/snir1551/Ex1_OOP/blob/master/ex1/pictures/dijkstra6.png"  width="250"> 
 
 White color - not visited nodes<br>
 Black color - visited nodes<br>

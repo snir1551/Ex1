@@ -1,4 +1,4 @@
-package ex1;
+package ex1.src;
 
 import java.io.Serializable;
 import java.util.*;
@@ -58,7 +58,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * @param node1 key of the node1
      * @param node2 key of the node2
      * NOTE: O(1)
-     * @return iff exist edge between node1 to node2
+     * @return true iff exist edge between node1 to node2
      */
     @Override
     public boolean hasEdge(int node1, int node2) {
@@ -131,7 +131,7 @@ public class WGraph_DS implements weighted_graph, Serializable {
      * This method return a pointer (shallow copy) for a
      * Collection representing all the nodes in the graph.
      * Note: O(1)
-     * @return Collection<node_data>
+     * @return Collection<node_info>
      */
     @Override
     public Collection<node_info> getV() {

@@ -1,6 +1,9 @@
-package ex1;
+package ex1.tests;
 
 
+import ex1.src.WGraph_DS;
+import ex1.src.node_info;
+import ex1.src.weighted_graph;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -330,6 +333,31 @@ class WGraph_DSTest {
         long end = new Date().getTime();
         double dt = (end-start)/1000.0;
         assertTrue(dt < 10.0);//4.3 sec
+        //System.out.println(dt);
 
     }
+
+//    @Test
+//    void TestRunTimeWithRandom()
+//    {
+//        long start = new Date().getTime();
+//        int numNode = 1000000;
+//        int numEdge = numNode*10;
+//        Random rand = new Random(1000000);
+//
+//        weighted_graph graph = new WGraph_DS();
+//        for(int i = 0; i<numNode ; i++)
+//        {
+//            graph.addNode(i);
+//        }
+//        while(numEdge > graph.edgeSize())
+//        {
+//
+//        }
+//        long end = new Date().getTime();
+//        double dt = (end-start)/1000.0;
+//        //assertTrue(dt < 10.0);//4.3 sec
+//        System.out.println(dt);
+//
+//    }
 }

@@ -1,5 +1,3 @@
-package ex1.src;
-
 public interface edge_info {
 
 
